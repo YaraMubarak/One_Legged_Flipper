@@ -69,7 +69,7 @@ if control_state == init
   control_state = in_air;
   result = control_state;
   return;
-end;
+end
 
 
 if control_state == in_air
@@ -82,7 +82,7 @@ if control_state == in_air
     end;
     result = control_state;
     return;
-  end;
+  end
   
   centroid = [centroid;
               x];
