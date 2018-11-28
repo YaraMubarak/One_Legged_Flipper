@@ -52,6 +52,8 @@ body_angled_new = body_angled + dt*hip_torque/body_moi;
 body_angle = body_angle + dt*(body_angled + body_angled_new)/2;
 body_angled = body_angled_new;
 
+
+
 if ( leg_state == 0 ) % in air
  leg_angled_new = leg_angled - dt*hip_torque/leg_moi;
  leg_angle = leg_angle + dt*(leg_angled + leg_angled_new)/2;

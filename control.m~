@@ -173,12 +173,9 @@ if control_state == on_ground_going_down
 %                     0.01*(masterSpeed - abs(xd)));
           
           tempL = tempL + (Ldesired - abs(currL))*0.1;
-          testheight = ((tempL*g/(2*speed_desired))^2) / (2*g);            
+            
+          testheight = ((tempL*g/(2*speed_desired))^2) / (2*g);
           testSpeed = tempL*g / (2*sqrt(2*g*height_desired));
-          
-%           height_desired = height_desired + 0.01*(testheight-max_height)
-    
-%           height_desired = height_desired + 0.02*(testheight - max_height)
           speed_desired = testSpeed;
           centroid = [];
       end     
@@ -200,13 +197,13 @@ if control_state == on_ground_going_up
   
   
   
- 
  %Original Heigh Controller
   error = height_desired - max_height; 
   integration = integration + error;
-  rest_leg_length = rest_leg_length + 0.25*(error) + 0.001*integration;
+%   rest_leg_length = rest_leg_length + 0.25*(error) + 0.001*integration;
     
-
+  testheight = ((tempL*g/(2*speed_desired))^2) / (2*g);
+  rest_leg_length = rest_leg_length + 0.25*(error) + 0.001*integration;
   
  
   if leg_length_new > rest_leg_length

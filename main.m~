@@ -31,9 +31,7 @@ speed_integral = 0;
 
 global bitbit; bitbit = true;
 
-global centroid; centroid = [];
-global centroidIntegral; centroidIntegral = 0;
-
+global centroid; 
 
 
 figure(1) % choose right plot target
@@ -76,11 +74,10 @@ max_n_points = 4000;
 array(max_n_points,9) = 0;
 
 
-Ldesired = 0.5;
+Ldesired = 0.2;
 global masterSpeed
 k = 200; m = 1; g = 9.81;
-corrFactor = 0.8
-masterSpeed = corrFactor*Ldesired*g / (2*sqrt(2*g*height_desired));
+masterSpeed = Ldesired*g / (2*sqrt(2*g*height_desired));
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
