@@ -150,3 +150,6 @@ figure ; plot(array(1:max_i,1),array(1:max_i,6),'b', ...
 
 figure ; plot(array(1:max_i,1),array(1:max_i,9)) ;
     xlabel('Time (s)') ; ylabel('m/s') ; title('Horizontal Speed') ; grid on ;
+    
+figure ; plot(array(1:max_i,1),array(1:max_i,3)) ;
+    xlabel('Time (s)') ; ylabel('m') ; title('Horizontal position') ; grid on ;
