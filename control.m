@@ -14,6 +14,8 @@ global integration
 global speed_integral
 
 global bitbit;
+global pancake_flag pancake_indic  
+
 
 
 
@@ -37,6 +39,11 @@ hip_grnd_b = 20;
 
 kx_speed = 0.0007;
 kx_speed_I = 0.000005;
+
+if pancake_flag 
+     kx = 6e-3; 
+end 
+
 
 leg_length_default = 0.5;
 
@@ -69,20 +76,30 @@ if control_state == in_air
   end;
   %Speed control by modulating the desired leg angle
 
-  %Want to use the equation given in Raibert control
+    
+  if and(pancake_flag,pancake_indic)  
+      speed_desired = -speed_desired ; 
+      pancake_indic = not(pancake_indic) ; 
+  elseif and(pancake_flag,not(pancake_indic) ) 
+        pancake_indic = not(pancake_indic) ; 
+  end 
+  
   Ts = last_bounce_time;
   speed_integral = speed_integral + xd - speed_desired;
-  xf = Ts*xd/2 + kx_speed*(xd - speed_desired) + kx_speed_I*speed_integral;
   
-%   leg_angle_desired = leg_angle_desired+pi;
+  if not(pancake_flag) 
+  %Want to use the equation given in Raibert control
+    xf = Ts*xd/2 + kx_speed*(xd - speed_desired) + kx_speed_I*speed_integral;
+    leg_angle_desired = (asin(xf/leg_length)) - 2*pi;
+  else 
+    xf = xd*Ts/2  +kx*(abs(xd) - 4.25*speed_desired) ;
+    leg_angle_desired = asin((xf)/leg_length) ; 
+  end 
   
-  if bitbit
-      leg_angle_desired = (asin(xf/leg_length)) - 2*pi;
-  else
+  if not(bitbit)
       leg_angle_desired = 0;
   end
-  
-%   leg_angle_desired = 0;
+
 
   hip_torque = hip_air_k*(-leg_angle_desired + leg_angle) + ...
                              hip_air_b*(leg_angled);
@@ -144,12 +161,15 @@ if control_state == on_ground_going_up
   
   hip_torque = hip_grnd_k*(0 -body_angle) + ...
       hip_grnd_b*(0 - body_angled);
+
+  
+end;
+
+
+
   
 %   if bitbit
 %       leg_angle_desired = leg_angle_desired + pi*2;
 %        bitbit = false; %set flag to be false so it doesnt add more 
 %   end
-  
-end;
-
 

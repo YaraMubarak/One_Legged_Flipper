@@ -13,6 +13,7 @@ global speed_desired
 % Michael's variables
 global integration
 global legAngleControl
+global pancake_flag pancake_indic 
 integration = 0;
 legAngleControl = 0;
 
@@ -31,7 +32,9 @@ figure(1) % choose right plot target
 % intialize variables.
 % stuff we want to control
 height_desired = 1;
-speed_desired = 1;
+speed_desired = 0.01;
+pancake_flag = true ; % pancake mode? 
+pancake_indic = true ; % muck variable doesnt matter how you in
 % speed_desired = 30*speed_desired;
 leg_angle_desired = 0;
 
@@ -58,7 +61,7 @@ last_takeoff_time = -1;
 max_height = y;
 last_max_height = y;
 
-max_n_points = 3500;
+max_n_points = 4000;
 
 % allocate array
 array(max_n_points,9) = 0;
