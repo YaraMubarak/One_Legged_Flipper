@@ -48,7 +48,7 @@ if control_state == in_air
   Ts = 0.25 ; 
   kx = 8e-3; 
   xf = xd*Ts/2  +kx*(xd - 4.25*speed_desired) ;
-  
+%   
   leg_angle_desired = asin((xf)/leg_length) ;
   leg_angle_desired = leg_angle_desired + 2*pi; 
   hip_torque = hip_air_k*(leg_angle - leg_angle_desired) + ...

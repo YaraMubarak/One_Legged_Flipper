@@ -8,6 +8,7 @@ function [dt, time, x ,y, xd, yd , hip_torque, leg_angle, body_angle, ...
     last_touchdown_time, last_takeoff_time, max_height, last_max_height, speed_desired, ytakeoff)
 
 
+
 mass = 1.0;
 g = 9.81;
 leg_k = 200;

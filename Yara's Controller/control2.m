@@ -8,14 +8,14 @@ global control_state height_desired leg_angle_desired last_bounce_time
 global last_touchdown_time last_takeoff_time max_height last_max_height
 global speed_desired
 global ytakeoff
-global jump_counter 
+
 
 % control_state values
 init = 0;
 in_air = 1;
 on_ground_going_down = 2;
 on_ground_going_up = 3;
-jump_counter = 0 ; 
+
 
 hip_air_k = 1e5;
 hip_air_b = 85;

@@ -1,5 +1,0 @@
-function [jump_end,prev_state] = check_jump(control_state,prev_state,initial_state) 
-jump_end = false ;
-if control_state == 
-
-end 
