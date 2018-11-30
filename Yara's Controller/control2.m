@@ -8,6 +8,7 @@ global control_state height_desired leg_angle_desired last_bounce_time
 global last_touchdown_time last_takeoff_time max_height last_max_height
 global speed_desired
 global ytakeoff
+global L_desired 
 
 
 % control_state values
@@ -15,6 +16,7 @@ init = 0;
 in_air = 1;
 on_ground_going_down = 2;
 on_ground_going_up = 3;
+
 
 
 hip_air_k = 1e5;
@@ -55,8 +57,8 @@ if control_state == in_air
   kx = 8e-3; 
   xf = xd*Ts/2  +kx*(xd - 4.25*speed_desired) ;
   
-  leg_angle_desired = asin((xf)/leg_length) ;
-  leg_angle_desired = leg_angle_desired + 2*pi; 
+  leg_angle_desired = asin((xf)/leg_length)  - 2*pi;
+
   hip_torque = hip_air_k*(leg_angle - leg_angle_desired) + ...
                              hip_air_b*leg_angled;
   if ( y > max_height )

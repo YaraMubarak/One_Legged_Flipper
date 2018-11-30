@@ -15,6 +15,7 @@ global speed_desired
 global L_desired 
 global delta_x 
 global c ceq 
+global Frame_array Frame_counter 
 figure(1) % choose right plot target
 
 % intialize variables.
@@ -56,7 +57,7 @@ max_height = y;
 last_max_height = y;
 
 delta_xs = [] ;
-max_n_points = 3000;
+max_n_points =5000;
 
 % allocate array
 array(max_n_points,9) = 0;
@@ -65,9 +66,13 @@ jump_counter = 0 ;
 did_you_optimize_for_this_jump = false ;
 
 
+%video Stuff 
+Frame_counter = 1 ; %initialize 
+Frame_array = {} ; 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % outer loop: save data and draw picture at slow rate
-for i = 1:5000
+for i = 1:1500
 
 
 % simulate and control at faster rate
@@ -98,16 +103,13 @@ if not(did_you_optimize_for_this_jump)
     delta_xs = [delta_xs , delta_x] ; 
     disp(round(abs(L_desired),2)  == round(abs(delta_x),2)  ) 
  
-    if round(abs(L_desired),2)  == round(abs(delta_x),2)  && rem(jump_counter,2) ==0 && abs(L_desired) < max_l_d 
-        %L_desired = ramp_up(L_desired) ;
+    if round(abs(L_desired),2)  == round(abs(delta_x),2)  && rem(jump_counter,2) ==0 && round(abs(L_desired),1) < round(max_l_d,1) 
+        L_desired = ramp_up(L_desired) ;
     elseif  round(abs(L_desired),2)  ~= round(abs(delta_x),2) && rem(jump_counter,2) ==0 && abs(L_desired) > 0 
         %L_desired = ramp_down(L_desired) ;
 
     end 
-    
-
 end 
-
 end
 
 % save data in array
@@ -166,6 +168,23 @@ figure ; plot(array(1:max_i,1),array(1:max_i,4)) ;
 figure ; 
 plot(delta_xs ) 
 
+
+
+%% make video 
+% create the video writer with 1 fps
+  writerObj = VideoWriter('Jumper.avi');
+  writerObj.FrameRate = 5;
+  % set the seconds per image
+% open the video writer
+open(writerObj);
+% write the frames to the video
+for i=1:length(Frame_array)
+    % convert the image to a frame
+    frame = Frame_array{i}.cdata ;
+    %imshow(frame) 
+    writeVideo(writerObj, frame);
+end
+close(writerObj);
 
 %     xopt = fmincon(@opt_fun , [sign(L_desired)*abs(leg_angle_desired), height_desired, 0.1],...
 %                             [],[],[],[], [-10*pi,0.5, -abs(L_desired)*0.05],...
